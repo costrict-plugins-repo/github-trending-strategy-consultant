@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Worker: an open-source Claude Cowork plugin that handles the analytical workload of any structured company task. Research, synthesis, and executive-grade deliverables.">
+    <title>Worker | Claude Cowork Plugin</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --ink: #111;
+            --paper: #fff;
+            --warm: #f6f4f0;
+            --accent: #1a1a1a;
+            --gold: #96793a;
+            --muted: #71706e;
+            --light: #a8a6a3;
+            --rule: #e2e0dc;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Inter', -apple-system, system-ui, sans-serif;
+            background: var(--paper);
+            color: var(--ink);
+            line-height: 1.6;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+            text-rendering: optimizeLegibility;
+        }
+
+        .container {
+            max-width: 720px;
+            margin: 0 auto;
+            padding: 0 24px;
+        }
+
+        /* Header */
+        header {
+            padding: 40px 0 28px;
+        }
+        .meta {
+            font-size: 11.5px;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            color: var(--gold);
+            font-weight: 600;
+            margin-bottom: 14px;
+        }
+        h1 {
+            font-family: 'Instrument Serif', Georgia, serif;
+            font-size: clamp(2.8rem, 6vw, 4.2rem);
+            font-weight: 400;
+            line-height: 1.05;
+            letter-spacing: -0.02em;
+            color: var(--ink);
+            margin-bottom: 10px;
+        }
+        .tagline {
+            font-size: 18px;
+            color: var(--muted);
+            font-weight: 400;
+            line-height: 1.5;
+        }
+
+        /* Sections */
+        .section { padding: 24px 0; }
+
+        h2 {
+            font-family: 'Instrument Serif', Georgia, serif;
+            font-size: 1.5rem;
+            font-weight: 400;
+            letter-spacing: -0.01em;
+            margin-bottom: 14px;
+            color: var(--ink);
+        }
+
+        /* Value block */
+        .value-block {
+            background: var(--warm);
+            border-radius: 6px;
+            padding: 22px 26px;
+        }
+        .value-block p {
+            font-size: 15.5px;
+            line-height: 1.75;
+            color: var(--ink);
+        }
+        .value-block p + p {
+            margin-top: 12px;
+        }
+        .value-audience {
+            margin-top: 10px;
+            font-size: 13px;
+            font-weight: 500;
+            color: var(--gold);
+            letter-spacing: 0.2px;
+        }
+
+        /* Workflow */
+        .step {
+            display: grid;
+            grid-template-columns: 32px 1fr;
+            gap: 14px;
+            padding: 12px 0;
+            border-bottom: 1px solid var(--rule);
+            align-items: baseline;
+        }
+        .step:last-child { border-bottom: none; }
+        .step-n {
+            font-family: 'Instrument Serif', Georgia, serif;
+            font-size: 1.15rem;
+            color: var(--gold);
+        }
+        .step-h {
+            font-weight: 600;
+            font-size: 14px;
+            color: var(--ink);
+            margin-bottom: 3px;
+        }
+        .step-p {
+            font-size: 13.5px;
+            color: var(--muted);
+            line-height: 1.55;
+        }
+
+        /* Install */
+        .install {
+            background: var(--ink);
+            border-radius: 6px;
+            padding: 22px 26px;
+        }
+        .install-section { margin-bottom: 22px; }
+        .install-section:last-child { margin-bottom: 0; }
+        .install-label {
+            font-size: 13px;
+            font-weight: 600;
+            color: #b0aeab;
+            margin-bottom: 12px;
+        }
+        .install ol {
+            padding-left: 18px;
+            font-size: 13.5px;
+            color: #908e8b;
+            line-height: 2;
+        }
+        .install strong { color: #d0cecc; }
+        .install p {
+            font-size: 13.5px;
+            color: #908e8b;
+            line-height: 1.7;
+        }
+        .install a.repo-link {
+            color: var(--gold);
+            text-decoration: none;
+            font-weight: 500;
+        }
+        .install a.repo-link:hover { text-decoration: underline; }
+        .btn {
+            display: inline-block;
+            margin-top: 14px;
+            padding: 10px 24px;
+            background: var(--gold);
+            color: #fff;
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 500;
+            border-radius: 5px;
+            transition: opacity 0.2s;
+        }
+        .btn:hover { opacity: 0.85; }
+
+        /* Footer */
+        footer {
+            padding: 24px 0 40px;
+        }
+        .footer-cta {
+            font-size: 14px;
+            color: var(--muted);
+            margin-bottom: 10px;
+            line-height: 1.6;
+        }
+        .footer-links {
+            display: flex;
+            gap: 24px;
+            flex-wrap: wrap;
+            margin-bottom: 12px;
+        }
+        .footer-links a {
+            color: var(--gold);
+            text-decoration: none;
+            font-size: 13.5px;
+            font-weight: 500;
+        }
+        .footer-links a:hover { text-decoration: underline; }
+        .copy {
+            font-size: 12px;
+            color: var(--light);
+        }
+
+        /* Mobile */
+        @media (max-width: 600px) {
+            header { padding: 28px 0 20px; }
+            .section { padding: 20px 0; }
+            .value-block, .install { padding: 18px; }
+            footer { padding: 20px 0 32px; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+
+    <header>
+        <div class="meta" style="text-align:center">Claude Cowork Plugin · Open Source · Claude paid plan required</div>
+        <h1 style="text-align:center; margin-left:auto; margin-right:auto">Worker</h1>
+        <div class="tagline" style="text-align:center">Research. Analysis. Deliverable. Action.</div>
+    </header>
+
+
+
+    <div class="section">
+        <div class="value-block">
+            <p>Worker handles 90% of the analytical workload in any structured company task: strategy engagements, market assessments, competitive reviews, M&amp;A diligence, operational analyses.</p>
+            <p>You focus on the 10% that creates unique value: steering, judgment, proprietary insight, and final go.</p>
+            <p>The plugin started in consulting and that remains its sharpest edge. But the same approach applies across most structured knowledge work.</p>
+        </div>
+    </div>
+
+
+
+    <div class="section">
+        <h2>How you'll work with it</h2>
+        <div class="step">
+            <span class="step-n">1</span>
+            <div>
+                <div class="step-h">Define the problem</div>
+                <div class="step-p">Worker sharpens your question into a decision-oriented problem statement, asks what internal data or reference material you have, and confirms the deliverable format before research begins.</div>
+            </div>
+        </div>
+        <div class="step">
+            <span class="step-n">2</span>
+            <div>
+                <div class="step-h">Multiple agents work independently</div>
+                <div class="step-p">Two analysts work independent angles while a third cross-checks for consistency and source quality, producing a single validated research base you can review and add context to before analysis continues.</div>
+            </div>
+        </div>
+        <div class="step">
+            <span class="step-n">3</span>
+            <div>
+                <div class="step-h">Everything gets pressure-tested</div>
+                <div class="step-p">A sense-check agent produces a written report covering claim quality, counter-narratives, and math. The synthesis that follows builds a structured argument with a governing message and evidence map.</div>
+            </div>
+        </div>
+        <div class="step">
+            <span class="step-n">4</span>
+            <div>
+                <div class="step-h">You get a structured deliverable</div>
+                <div class="step-p">Word, Excel, or PowerPoint depending on what you confirmed upfront, with every claim sourced. A separate validation agent audits the output against the research base before it reaches you.</div>
+            </div>
+        </div>
+    </div>
+    </div>
+
+
+
+    <div class="section">
+        <h2>Get started</h2>
+        <div class="install">
+            <div class="install-section">
+                <div class="install-label">Download and upload to Cowork</div>
+                <ol>
+                    <li>Download and unzip the plugin folder</li>
+                    <li>Open the Claude desktop app, switch to <strong>Cowork</strong></li>
+                    <li>Click <strong>Customize</strong>, then <strong>Browse plugins</strong>, then <strong>Upload plugin</strong></li>
+                    <li>Select the unzipped folder</li>
+                </ol>
+                <a href="https://github.com/Chipkorvyn/strategy-consultant/archive/refs/heads/main.zip" class="btn">Download plugin</a>
+            </div>
+            <div class="install-section">
+                <div class="install-label">Using the plugin</div>
+                <p>Once installed, the plugin activates automatically when Cowork recognises a relevant task. You can also ask Cowork to use it directly, for example: "Use Worker to analyse this market entry opportunity."</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="section" style="padding-top: 14px;">
+        <p style="font-size: 13.5px; color: var(--muted); line-height: 1.7;">For the technically inclined: the full source, prompt architecture, and agent definitions are on <a href="https://github.com/Chipkorvyn/strategy-consultant" style="color: var(--gold); text-decoration: none; font-weight: 500;">GitHub</a>. Contributions welcome.</p>
+    </div>
+
+
+
+    <footer>
+        <div class="footer-links">
+            <a href="https://github.com/Chipkorvyn/strategy-consultant/discussions">Join the discussion</a>
+            <a href="https://github.com/Chipkorvyn/strategy-consultant/issues">Suggest improvements</a>
+            <a href="https://github.com/Chipkorvyn/strategy-consultant">Source code</a>
+        </div>
+        <div class="copy">Open source · Apache 2.0</div>
+    </footer>
+
+</div>
+
+</body>
+</html>
